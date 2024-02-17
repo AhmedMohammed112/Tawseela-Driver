@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "1044416982445",
+    "firebase_url": "https://tawseela-a24cc-default-rtdb.firebaseio.com",
+    "project_id": "tawseela-a24cc",
+    "storage_bucket": "tawseela-a24cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044416982445:android:9ade746a725b501524c524",
+        "android_client_info": {
+          "package_name": "com.example.tawseela"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpxZhYSoKKCkqZcXUoAyFx5-5QYqVwK6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044416982445:android:ee36f053831f5c2d24c524",
+        "android_client_info": {
+          "package_name": "com.example.twseela_driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpxZhYSoKKCkqZcXUoAyFx5-5QYqVwK6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
