@@ -242,9 +242,10 @@ class HomeCubit extends Cubit<HomeStates> {
                       SharedPref.saveTripData(value: rideRequestId);
                       updateDriverStatusUsecase.execute("Accepted");
                       changeTripStatus("accepted");
-                      updateDriverLocationUsecase.execute(UpdateDriverLocationOnRequestUsecaseData(requestId: rideRequestId, latitude: currentLocationData!.latitude, longitude: currentLocationData!.longitude));
-                      listenToTheTripStatus(context);
-                      initNewTrip(rideRequestData);
+                      updateDriverLocationUsecase.execute(UpdateDriverLocationOnRequestUsecaseData(requestId: rideRequestId, latitude: currentLocationData!.latitude, longitude: currentLocationData!.longitude)).then((value) {
+                        listenToTheTripStatus(context);
+                        initNewTrip(rideRequestData);
+                      });
                     }
                     else {
                       warningDialog(context);
@@ -578,12 +579,12 @@ void getDriverUpdatesAtRealTime() async {
     });
   }
 
-  void initNewTrip(RideRequestData rideRequestData) {
-    rideRequestData = rideRequestData;
+  void initNewTrip(RideRequestData rideRequestDataa) {
+    rideRequestData = rideRequestDataa;
     changeRequestStatus("arrived");
     updatePickUpLocation(pickUpLocation2: LatLng(currentLocationData!.latitude!, currentLocationData!.longitude!));
-    updateDropOffLocation(returnedDropOffLocation: LatLng(rideRequestData.originLat, rideRequestData.originLng));
-    setDestinationLocation(LatLng(rideRequestData.destinationLat, rideRequestData.destinationLng));
+    updateDropOffLocation(returnedDropOffLocation: LatLng(rideRequestData!.originLat, rideRequestData!.originLng));
+    setDestinationLocation(LatLng(rideRequestData!.destinationLat, rideRequestData!.destinationLng));
     getDirectionDetails();
     getUserData();
   }

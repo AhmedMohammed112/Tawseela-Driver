@@ -50,7 +50,7 @@ class RideRequestDataResponse {
     date: (data.value as dynamic)['date'],
     tripStatus: (data.value as dynamic)['trip_status'] ?? '',
     fareAmount: double.parse(((data.value as dynamic)['fare_amount'] ?? 0.0).toString()),
-    rating: (data.value as dynamic)['rating'] == null ? 0.0 : double.parse((data.value as dynamic)['rating'].toString()),
+    rating: (data.value as dynamic)['rate'] == null ? 0.0 : double.parse((data.value as dynamic)['rate'].toString()),
   );
 
   Map<String, dynamic> toJson() => {

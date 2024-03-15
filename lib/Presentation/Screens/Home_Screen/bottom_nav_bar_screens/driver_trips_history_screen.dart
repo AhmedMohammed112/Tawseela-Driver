@@ -4,6 +4,7 @@ import 'package:twseela_driver/Presentation/Resources/values_manager.dart';
 import 'package:twseela_driver/Presentation/Widgets/my_text.dart';
 
 import '../../../Widgets/my_elevation_button.dart';
+import '../../../Widgets/trip_card.dart';
 import '../../Driver_Trips_History/Driver_History_Trips_Cubit/driver_history_trips_cubit.dart';
 import '../../Driver_Trips_History/Driver_History_Trips_Cubit/driver_history_trips_states.dart';
 
@@ -13,16 +14,7 @@ class DriverTripsHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DriverHistoryTripsCubit,DriverHistoryTripsStates>(
-      listener: (BuildContext context, state) {
-        // if(state is GetDriverHistoryTripsErrorState) {
-        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //     content: MyText(
-        //       text: state.failure.message!,
-        //       size: AppSizes.s16,
-        //     ),
-        //   ));
-        // }
-      },
+      listener: (BuildContext context, state) {},
       builder: (BuildContext context, state) {
         var cubit = DriverHistoryTripsCubit.get(context);
         return (state is GetDriverHistoryTripsErrorState) ?
@@ -65,39 +57,23 @@ class DriverTripsHistory extends StatelessWidget {
             :
         state is GetDriverHistoryTripsSuccessState ? Padding(
           padding: const EdgeInsets.all(AppSizes.s15),
-          child: ListView.separated(
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSizes.s20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MyText(text: 'From: ${cubit.driverHistoryTrips[index].originAddress}',style: Theme.of(context).textTheme.labelMedium!,size: AppSizes.s15,),
-                      MyText(text: 'To: ${cubit.driverHistoryTrips[index].destinationAddress}',style: Theme.of(context).textTheme.labelMedium!,size: AppSizes.s15,),
-                      MyText(text: 'Date: ${cubit.driverHistoryTrips[index].date.substring(0,10)}',style: Theme.of(context).textTheme.labelMedium!,size: AppSizes.s15,),
-                      MyText(text: 'Time: ${cubit.driverHistoryTrips[index].date.substring(11,19)}',style: Theme.of(context).textTheme.labelMedium!,size: AppSizes.s15,),
-                      MyText(text: 'Price: ${cubit.driverHistoryTrips[index].fareAmount}',style: Theme.of(context).textTheme.labelMedium!,size: AppSizes.s15,),
-                      MyText(text: 'Status: ${cubit.driverHistoryTrips[index].tripStatus}',style: Theme.of(context).textTheme.labelMedium!,size: AppSizes.s15,),
-                      Row(
-                        children: [
-                          MyText(text: 'Rating: ${cubit.driverHistoryTrips[index].rating}',style: Theme.of(context).textTheme.labelMedium!,size: AppSizes.s15,),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
+          child: RefreshIndicator(
+            onRefresh: () async {
+              cubit.getDriverTripsHistory();
             },
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider();
-            },
-            itemCount: cubit.driverHistoryTrips.length,
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return TripHistoryCard(tripData: cubit.driverHistoryTrips[index]);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: AppSizes.s10);
+              },
+              itemCount: cubit.driverHistoryTrips.length,
+            ),
           ),
-        ) : const CircularProgressIndicator();
+        ) : Center(child: const CircularProgressIndicator());
       },
     );
   }

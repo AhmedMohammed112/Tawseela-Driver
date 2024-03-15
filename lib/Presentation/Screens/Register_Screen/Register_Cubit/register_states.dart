@@ -17,3 +17,5 @@ class RegisterErrorState extends RegisterStates
 
 class RegisterChangeVisibilityState extends RegisterStates {}
 class RegisterSelectVehicleTypeState extends RegisterStates {}
+
+class ChangePageState extends RegisterStates {}
